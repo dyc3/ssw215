@@ -37,8 +37,10 @@ h3:nth-of-type(3) {
 	color: red;
 }
 
-table {
-	border: 1px;
+.prices {
+	border: 1px solid;
+	display: flex;
+	justify-content: center;
 }
 
 h4 {
