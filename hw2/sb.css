@@ -1,0 +1,47 @@
+/*
+Author: Carson McManus
+Date: 2/2/2021
+*/
+
+body {
+	background-color: linen;
+}
+
+h1 {
+	color: rgb(6, 97, 4);
+	margin-left: 40px;
+	text-align: center;
+}
+
+p {
+	text-align: justify;
+}
+
+h3:nth-of-type(1) {
+	color: #066104;
+}
+
+h3:nth-of-type(2) {
+	color: hsl(119, 92%, 20%);
+}
+
+h3:nth-of-type(3) {
+	color: green;
+}
+
+.cappuccino {
+	text-decoration: line-through;
+}
+
+.expresso {
+	color: red;
+}
+
+table {
+	border: 1px;
+}
+
+h4 {
+	text-align: center;
+	color: maroon;
+}
