@@ -1,0 +1,103 @@
+body {
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	color: white;
+}
+
+.painful-background {
+	background: linear-gradient(231deg, #ffab00, #00bb20, #00ffdf, #001cff, #af00ff, #ff0000);
+	background-size: 1200% 1200%;
+
+	-webkit-animation: sore 4s ease infinite;
+	-moz-animation: sore 4s ease infinite;
+	animation: sore 4s ease infinite;
+}
+
+@-webkit-keyframes sore {
+	0%{background-position:0% 97%}
+	50%{background-position:100% 4%}
+	100%{background-position:0% 97%}
+}
+@-moz-keyframes sore {
+	0%{background-position:0% 97%}
+	50%{background-position:100% 4%}
+	100%{background-position:0% 97%}
+}
+@keyframes sore {
+	0%{background-position:0% 97%}
+	50%{background-position:100% 4%}
+	100%{background-position:0% 97%}
+}
+
+.obnoxious-title {
+	text-align: center;
+	animation: obnoxious 4s ease-in-out infinite;
+}
+
+@keyframes obnoxious {
+	0% {
+		color: #00ffdf;
+		transform: scale(1);
+	}
+	25% {
+		color: #ffab00;
+		transform: translateY(100px) scale(1.25) rotate(30deg);
+	}
+	50% {
+		color: #ff0000;
+		transform: scale(0.9);
+	}
+	75% {
+		color: #00bb20;
+		transform: translateY(100px) scale(1.25) rotate(-30deg);
+	}
+	100% {
+		color: #00ffdf;
+	}
+}
+
+header {
+	width: 100;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 300px;
+}
+
+header > .wrapper {
+	width: 50%;
+}
+
+.portrait img {
+	mix-blend-mode: hard-light;
+	width: 100%;
+}
+
+.main {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+aside {
+	display: flex;
+	flex-direction: column;
+	width: 200px;
+}
+
+h3:nth-of-type(1) {
+	color: #d1650c;
+}
+
+h3:nth-of-type(2) {
+	color: hsl(286, 46%, 68%);
+}
+
+h3:nth-of-type(3) {
+	color: lime;
+}
