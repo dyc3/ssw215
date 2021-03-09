@@ -1,0 +1,25 @@
+-- part 1a
+CREATE TABLE students (
+	StudID int,
+	FirstName varchar,
+	LastName varchar,
+	Major varchar,
+	Year int
+);
+
+-- part 1b
+INSERT INTO students (StudID, FirstName, LastName, Major, Year) VALUES (56225348, 'GpIGGqVkHlsMQY', 'qkg8BYnYJ', 'Q8PMv38', 21020086);
+INSERT INTO students (StudID, FirstName, LastName, Major, Year) VALUES (59762828, '9Wd2zFcw', 'Aevn5', 'gWb3diUhP9Pr', 17416828);
+INSERT INTO students (StudID, FirstName, LastName, Major, Year) VALUES (63517243, '4qAJ6ZSyLbI', '4mPfDhKN', 'jdKBFe', 55466275);
+INSERT INTO students (StudID, FirstName, LastName, Major, Year) VALUES (1896247, 'UVUDoC50qfqn', 'fD6bATTbszWD', '9dVHgdqm3hHBv', 38918506);
+INSERT INTO students (StudID, FirstName, LastName, Major, Year) VALUES (56001865, 'A5EWfczn', 'hz301cmFkO', 'K7bFf75ZD', 97171060);
+
+-- part 1c
+SELECT EmployeeId, FirstName, LastName, Title FROM employees WHERE Title='Sales Support Agent';
+
+-- part 1d
+ALTER TABLE employees ADD salary int;
+UPDATE employees SET salary=random();
+
+-- part 1e
+SELECT AlbumId, Title FROM albums WHERE ArtistId=2 OR ArtistId=27 OR ArtistId=82;
