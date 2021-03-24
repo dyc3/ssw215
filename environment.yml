@@ -1,0 +1,10 @@
+name: ssw215
+channels:
+  - defaults
+prefix: $HOME/anaconda3/envs/ssw215
+
+dependencies:
+  - python=3.9
+  - pip:
+    - requests
+    - redis
