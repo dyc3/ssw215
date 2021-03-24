@@ -58,7 +58,7 @@ def cached_get_one(url: str, redis_key_pfx: str):
 	# print(f"link header: {resp.headers['Link']}")
 	if resp.status_code >= 400:
 		print(f"get resource failed: {resp.status_code} {resp.json()}")
-		return []
+		return None
 	if resp.status_code == 304:
 		print(f"cache hit: {redis_key_pfx}")
 		payload = r.get(f"{redis_key_pfx}:result")
