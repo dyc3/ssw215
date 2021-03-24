@@ -32,7 +32,7 @@ def cached_get_page(url_str: str, page: int, redis_key_pfx: str):
 	print(f"rate limit: {resp.headers['X-RateLimit-Remaining']}/{resp.headers['X-RateLimit-Limit']} reset at {datetime.datetime.fromtimestamp(int(resp.headers['X-RateLimit-Reset']))}")
 	# print(f"link header: {resp.headers['Link']}")
 	if resp.status_code >= 400:
-		print(f"get events failed: {resp.status_code} {resp.json()}")
+		print(f"get paged resource failed: {resp.status_code} {resp.json()}")
 		return []
 	if resp.status_code == 304:
 		print(f"cache hit: {redis_key_pfx} page {page}")
@@ -42,6 +42,29 @@ def cached_get_page(url_str: str, page: int, redis_key_pfx: str):
 		print(f"cache miss: {redis_key_pfx} page {page}")
 		r.set(f"{redis_key_pfx}:{page}:result", payload)
 		r.set(f"{redis_key_pfx}:{page}:etag", resp.headers.get("ETag"))
+	return json.loads(payload)
+
+def cached_get_one(url: str, redis_key_pfx: str):
+	assert len(redis_key_pfx) > 0
+	cached_etag = r.get(f"{redis_key_pfx}:etag")
+
+	resp = requests.get(url, headers={
+		"Authorization": f"token {TOKEN}",
+		"If-None-Match": cached_etag,
+	})
+	print(f"rate limit: {resp.headers['X-RateLimit-Remaining']}/{resp.headers['X-RateLimit-Limit']} reset at {datetime.datetime.fromtimestamp(int(resp.headers['X-RateLimit-Reset']))}")
+	# print(f"link header: {resp.headers['Link']}")
+	if resp.status_code >= 400:
+		print(f"get resource failed: {resp.status_code} {resp.json()}")
+		return []
+	if resp.status_code == 304:
+		print(f"cache hit: {redis_key_pfx}")
+		payload = r.get(f"{redis_key_pfx}:result")
+	elif resp.status_code == 200:
+		payload = resp.text
+		print(f"cache miss: {redis_key_pfx}")
+		r.set(f"{redis_key_pfx}:result", payload)
+		r.set(f"{redis_key_pfx}:etag", resp.headers.get("ETag"))
 	return json.loads(payload)
 
 def get_all_events(username):
