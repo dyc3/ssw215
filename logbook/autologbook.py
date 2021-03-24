@@ -116,6 +116,28 @@ def get_commits(repo: dict, author: str, since=None, branch=None):
 def parse_gh_time(s) -> datetime.datetime:
 	return datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
 
+ext_to_language = {
+	"py": "Python",
+	"go": "Go",
+	"html": "HTML",
+	"css": "CSS",
+	"js": "javascript",
+	"jsx": "javascript",
+	"vue": "Vue",
+	"ts": "typescript",
+	"tsx": "typescript",
+	"rs": "Rust",
+	"c": "C",
+	"cpp": "C++",
+	"sh": "Bash",
+	"json": "json",
+	"csv": "csv",
+	"md": "markdown",
+	"yml": "yaml",
+	"yaml": "yaml",
+}
+IGNORE_EXTS = ["mod", "sum", "gitignore", "gitmodules", "jpg", "jpeg", "png", "gif", "mp4", "tour"]
+
 if __name__ == "__main__":
 	USERNAME = 'dyc3'
 	SINCE = '2021-03-11'
@@ -140,7 +162,7 @@ if __name__ == "__main__":
 				"duration": None,
 				"additions": 0,
 				"deletions": 0,
-				"languages": [],
+				"languages": set(),
 			}]
 			current_session = []
 		repo_data = cached_get_one(repo['url'], f"repo:{repo['name']}")
@@ -188,6 +210,13 @@ if __name__ == "__main__":
 
 			session["additions"] += data['stats']['additions']
 			session["deletions"] += data['stats']['deletions']
+			for file in data['files']:
+				if file['filename'].startswith(".") or '.' not in file['filename']:
+					continue
+				ext = file['filename'].split(".")[-1]
+				if ext in IGNORE_EXTS:
+					continue
+				session["languages"] |= {ext_to_language[ext]}
 		total_additions += session["additions"]
 		total_deletions += session["deletions"]
 
