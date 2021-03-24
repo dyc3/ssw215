@@ -45,8 +45,15 @@ def cached_get_page(url_str: str, page: int, redis_key_pfx: str):
 		r.set(f"{redis_key_pfx}:{page}:etag", resp.headers.get("ETag"))
 	return json.loads(payload)
 
-def cached_get_one(url: str, redis_key_pfx: str, media_type: str="application/vnd.github.v3+json"):
+def cached_get_one(url: str, redis_key_pfx: str, media_type: str="application/vnd.github.v3+json", is_constant=False):
 	assert len(redis_key_pfx) > 0
+	if is_constant:
+		try:
+			payload = r.get(f"{redis_key_pfx}:result")
+			return json.loads(payload)
+		except:
+			print("constant resource not found in cache")
+
 	cached_etag = r.get(f"{redis_key_pfx}:etag")
 
 	resp = requests.get(url, headers={
@@ -203,7 +210,7 @@ if __name__ == "__main__":
 		# compile lines of code, languages
 		total_commits += len(session['commits'])
 		for commit in session['commits']:
-			data = cached_get_one(commit['url'], f"commit:{session['repo']['name']}:{commit['sha']}")
+			data = cached_get_one(commit['url'], f"commit:{session['repo']['name']}:{commit['sha']}", is_constant=True)
 			if not data:
 				print(f"commit doesn't exist? {session['repo']['name']} {commit['sha']}")
 				continue
