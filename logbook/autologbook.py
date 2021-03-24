@@ -228,7 +228,7 @@ if __name__ == "__main__":
 		total_deletions += session["deletions"]
 
 	print("Summary:")
-	print(f"{len(coding_sessions)} coding sessions for a total of {total_time}")
+	print(f"{len(coding_sessions)} coding sessions since {SINCE} for a total of {total_time}")
 	print(f"{len(repos)} repos")
 	print(f"\t{total_commits} commits")
 	print(f"\t{total_additions} additions")
