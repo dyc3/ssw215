@@ -118,8 +118,9 @@ def parse_gh_time(s) -> datetime.datetime:
 
 if __name__ == "__main__":
 	USERNAME = 'dyc3'
+	SINCE = '2021-03-11'
 	repos = {}
-	for event in get_filtered_events(USERNAME, since='2021-03-11'):
+	for event in get_filtered_events(USERNAME, since=SINCE):
 		repos[event['repo']['name']] = event['repo']
 		print(f"event: {event['id']} {event['type'].ljust(20)} {event['repo']['name'].ljust(30)} {event['created_at']}")
 	repos = list(repos.values())
@@ -144,8 +145,8 @@ if __name__ == "__main__":
 			current_session = []
 		repo_data = cached_get_one(repo['url'], f"repo:{repo['name']}")
 
-		# for commit in get_commits(repo, USERNAME, since='2021-03-11', branch=repo_data['default_branch']):
-		for commit in get_commits(repo, USERNAME, since='2021-03-11'):
+		# for commit in get_commits(repo, USERNAME, since=SINCE, branch=repo_data['default_branch']):
+		for commit in get_commits(repo, USERNAME, since=SINCE):
 			print(f"commit: {commit['sha']} {commit['author']['login']} {commit['commit']['author']['date']} {commit['committer']['login']}")
 			if not current_session:
 				current_session = [commit]
@@ -161,7 +162,7 @@ if __name__ == "__main__":
 		if current_session:
 			push_session()
 
-	min_session_time = datetime.timedelta(minutes=45)
+	min_session_time = datetime.timedelta(minutes=20)
 
 	total_time = datetime.timedelta(0)
 	total_commits = 0
