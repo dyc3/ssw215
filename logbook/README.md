@@ -1,7 +1,13 @@
-Requires redis to be installed
+1. Requires redis to be installed
 
-Set up environment with conda:
+2. Set up environment with conda:
 ```
-conda create -f environment.yml --name ssw215
+conda env create --file=environment.yml
 conda activate ssw215
+```
+
+3. Put your github access token in a file called `token`
+4. Run it
+```
+./logbook/autologbook.py
 ```
