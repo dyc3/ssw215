@@ -99,14 +99,18 @@ def get_filtered_events(username, types=["PushEvent", "PullRequestEvent"], since
 				continue
 		yield event
 
-def get_commits(repo: dict, author: str, since=None):
+def get_commits(repo: dict, author: str, since=None, branch=None):
 	page = 0
 	while True:
-		commits = cached_get_page(f"{repo['url']}/commits?author={author}&since={since}", page, f"commits:{repo['name']}:{author}")
+		if branch:
+			commits = cached_get_page(f"{repo['url']}/commits?author={author}&since={since}&sha={branch}", page, f"commits:{repo['name']}:{author}:{branch}")
+		else:
+			commits = cached_get_page(f"{repo['url']}/commits?author={author}&since={since}", page, f"commits:{repo['name']}:{author}")
 		if not commits:
 			break
 		for commit in commits:
 			yield commit
+
 		page += 1
 
 def parse_gh_time(s) -> datetime.datetime:
@@ -131,9 +135,16 @@ if __name__ == "__main__":
 			global current_session
 			coding_sessions += [{
 				"repo": repo,
-				"commits": [c['commit'] for c in current_session[::-1]]
+				"commits": current_session[::-1],
+				"duration": None,
+				"additions": 0,
+				"deletions": 0,
+				"languages": [],
 			}]
 			current_session = []
+		repo_data = cached_get_one(repo['url'], f"repo:{repo['name']}")
+
+		# for commit in get_commits(repo, USERNAME, since='2021-03-11', branch=repo_data['default_branch']):
 		for commit in get_commits(repo, USERNAME, since='2021-03-11'):
 			print(f"commit: {commit['sha']} {commit['author']['login']} {commit['commit']['author']['date']} {commit['committer']['login']}")
 			if not current_session:
@@ -153,13 +164,43 @@ if __name__ == "__main__":
 	min_session_time = datetime.timedelta(minutes=45)
 
 	total_time = datetime.timedelta(0)
+	total_commits = 0
+	total_additions = 0
+	total_deletions = 0
 	for i, session in enumerate(coding_sessions):
-		first_commit_time = parse_gh_time(session["commits"][0]['author']['date'])
-		last_commit_time = parse_gh_time(session["commits"][-1]['author']['date'])
+		first_commit_time = parse_gh_time(session["commits"][0]['commit']['author']['date'])
+		last_commit_time = parse_gh_time(session["commits"][-1]['commit']['author']['date'])
 		delta = last_commit_time - first_commit_time
 		assert delta >= datetime.timedelta(0)
 		duration = max(delta, min_session_time) # + datetime.timedelta(minutes=20)
 		print(f"session {i}: {session['repo']['name']} {len(session['commits'])} commits, {duration}")
 		total_time += duration
+		session["duration"] = duration
 
-	print(f"summary: {len(coding_sessions)} coding sessions in {len(repos)} repos for a total of {total_time}")
+		# compile lines of code, languages
+		total_commits += len(session['commits'])
+		for commit in session['commits']:
+			data = cached_get_one(commit['url'], f"commit:{session['repo']['name']}:{commit['sha']}")
+			if not data:
+				print(f"commit doesn't exist? {session['repo']['name']} {commit['sha']}")
+				continue
+
+			session["additions"] += data['stats']['additions']
+			session["deletions"] += data['stats']['deletions']
+		total_additions += session["additions"]
+		total_deletions += session["deletions"]
+
+	print("Summary:")
+	print(f"{len(coding_sessions)} coding sessions for a total of {total_time}")
+	print(f"{len(repos)} repos")
+	print(f"\t{total_commits} commits")
+	print(f"\t{total_additions} additions")
+	print(f"\t{total_deletions} deletions")
+
+	# output csv
+	with open("logbook.csv", "w") as f:
+		f.write(f"date,project,languages,lines of code,time spent,reflection\n")
+		for session in coding_sessions:
+			reflection = ', '.join([c['commit']['message'].replace("\n", " ") for c in session['commits']])
+			languages = ', '.join(session['languages'])
+			f.write(f"{session['commits'][0]['commit']['author']['date']},{session['repo']['name']},\"{languages}\",+{session['additions']} / -{session['deletions']},{session['duration']},\"{reflection}\"\n")
