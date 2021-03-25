@@ -14,7 +14,11 @@ r = redis.Redis(db=os.getenv("REDIS_DB") or 5)
 
 def cached_get_page(url_str: str, page: int, redis_key_pfx: str):
 	assert len(redis_key_pfx) > 0
-	cached_etag = r.get(f"{redis_key_pfx}:{page}:etag")
+	etag_key = f"{redis_key_pfx}:{page}:etag"
+	result_key = f"{redis_key_pfx}:{page}:result"
+	if r.exists(result_key) < 1:
+		r.delete(etag_key)
+	cached_etag = r.get(etag_key)
 
 	url_parts = list(urlparse(url_str))
 	query = dict(parse_qsl(url_parts[4]))
@@ -37,12 +41,12 @@ def cached_get_page(url_str: str, page: int, redis_key_pfx: str):
 		return []
 	if resp.status_code == 304:
 		print(f"cache hit: {redis_key_pfx} page {page}")
-		payload = r.get(f"{redis_key_pfx}:{page}:result")
+		payload = r.get(result_key)
 	elif resp.status_code == 200:
 		payload = resp.text
 		print(f"cache miss: {redis_key_pfx} page {page}")
-		r.set(f"{redis_key_pfx}:{page}:result", payload)
-		r.set(f"{redis_key_pfx}:{page}:etag", resp.headers.get("ETag"))
+		r.set(result_key, payload)
+		r.set(etag_key, resp.headers.get("ETag"))
 	return json.loads(payload)
 
 def cached_get_one(url: str, redis_key_pfx: str, media_type: str="application/vnd.github.v3+json", is_constant=False):
