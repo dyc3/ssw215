@@ -238,6 +238,8 @@ if __name__ == "__main__":
 	print(f"\t{total_additions} additions")
 	print(f"\t{total_deletions} deletions")
 
+	coding_sessions.sort(key=lambda key: key['commits'][0]['commit']['author']['date'])
+
 	# output csv
 	with open("logbook.csv", "w") as f:
 		f.write(f"date,project,languages,lines of code,time spent,reflection\n")
