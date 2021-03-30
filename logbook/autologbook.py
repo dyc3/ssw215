@@ -147,7 +147,7 @@ ext_to_language = {
 	"yml": "yaml",
 	"yaml": "yaml",
 }
-IGNORE_EXTS = ["mod", "sum", "gitignore", "gitmodules", "jpg", "jpeg", "png", "gif", "mp4", "tour", "txt"]
+IGNORE_EXTS = ["mod", "sum", "gitignore", "gitmodules", "jpg", "jpeg", "png", "gif", "mp4", "tour", "txt", "ini", "conf"]
 
 if __name__ == "__main__":
 	USERNAME = 'dyc3'
