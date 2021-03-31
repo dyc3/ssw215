@@ -180,6 +180,12 @@ if __name__ == "__main__":
 
 		# for commit in get_commits(repo, USERNAME, since=SINCE, branch=repo_data['default_branch']):
 		for commit in get_commits(repo, USERNAME, since=SINCE):
+			# author = person who wrote the code
+			# committer = person who committed it to the repo
+			if commit['author']['login'] != commit['committer']['login']:
+				# skip
+				continue
+
 			print(f"commit: {commit['sha']} {commit['author']['login']} {commit['commit']['author']['date']} {commit['committer']['login']}")
 			if not current_session:
 				current_session = [commit]
