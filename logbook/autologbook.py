@@ -12,7 +12,7 @@ with open("token", "r") as f:
 BASE_URL = "https://api.github.com"
 r = redis.Redis(db=os.getenv("REDIS_DB") or 5)
 
-def cached_get_page(url_str: str, page: int, redis_key_pfx: str):
+def cached_get_page(url_str: str, page: int, redis_key_pfx: str, media_type: str="application/vnd.github.v3+json"):
 	assert len(redis_key_pfx) > 0
 	etag_key = f"{redis_key_pfx}:{page}:etag"
 	result_key = f"{redis_key_pfx}:{page}:result"
@@ -32,7 +32,7 @@ def cached_get_page(url_str: str, page: int, redis_key_pfx: str):
 	resp = requests.get(url, headers={
 		"Authorization": f"token {TOKEN}",
 		"If-None-Match": cached_etag,
-		"accept": "application/vnd.github.v3+json",
+		"accept": media_type,
 	})
 	print(f"rate limit: {resp.headers['X-RateLimit-Remaining']}/{resp.headers['X-RateLimit-Limit']} reset at {datetime.datetime.fromtimestamp(int(resp.headers['X-RateLimit-Reset']))}")
 	# print(f"link header: {resp.headers['Link']}")
