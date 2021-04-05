@@ -151,7 +151,7 @@ IGNORE_EXTS = ["mod", "sum", "gitignore", "gitmodules", "jpg", "jpeg", "png", "g
 
 if __name__ == "__main__":
 	USERNAME = 'dyc3'
-	SINCE = '2021-03-11'
+	SINCE = '2021-03-30'
 	repos = {}
 	for event in get_filtered_events(USERNAME, since=SINCE):
 		repos[event['repo']['name']] = event['repo']
