@@ -1,0 +1,161 @@
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $1000000.00>
+│├─ withdraws=0
+│├─ deposits=0
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $150.00>
+│├─ withdraws=0
+│├─ deposits=0
+│└─ penalties=0
+├┬ Account<Dewey Duck [800008], balance: $350.00>
+│├─ withdraws=0
+│├─ deposits=0
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $25.00>
+│├─ withdraws=0
+│├─ deposits=0
+│└─ penalties=0
+Processing transaction: 900009 -$2.00
+Withdrawing $2.00 from Account<Louie Duck [900009], balance: $25.00>
+Louie Duck withdrew $2.00
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $999996.00>
+│├─ withdraws=2
+│├─ deposits=0
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $152.00>
+│├─ withdraws=0
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Dewey Duck [800008], balance: $352.00>
+│├─ withdraws=0
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $23.00>
+│├─ withdraws=1
+│├─ deposits=0
+│└─ penalties=0
+Processing transaction: 800008 -$20.00
+Withdrawing $20.00 from Account<Dewey Duck [800008], balance: $352.00>
+Dewey Duck withdrew $20.00
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $999956.00>
+│├─ withdraws=4
+│├─ deposits=0
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $172.00>
+│├─ withdraws=0
+│├─ deposits=2
+│└─ penalties=0
+├┬ Account<Dewey Duck [800008], balance: $332.00>
+│├─ withdraws=1
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $43.00>
+│├─ withdraws=1
+│├─ deposits=1
+│└─ penalties=0
+Processing transaction: 700007 -$20.00
+Withdrawing $20.00 from Account<Huey Duck [700007], balance: $172.00>
+Transaction failed: Unable to withdraw $20.00: Over withdraw limit
+Huey Duck failed to withdraw $20.00: Unable to withdraw $20.00: Over withdraw limit
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $999961.00>
+│├─ withdraws=4
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $167.00>
+│├─ withdraws=0
+│├─ deposits=2
+│└─ penalties=1
+├┬ Account<Dewey Duck [800008], balance: $332.00>
+│├─ withdraws=1
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $43.00>
+│├─ withdraws=1
+│├─ deposits=1
+│└─ penalties=0
+Processing transaction: 900009 -$10.00
+Withdrawing $10.00 from Account<Louie Duck [900009], balance: $43.00>
+Transaction failed: Unable to withdraw $10.00: Over withdraw limit
+Louie Duck failed to withdraw $10.00: Unable to withdraw $10.00: Over withdraw limit
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $999966.00>
+│├─ withdraws=4
+│├─ deposits=2
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $167.00>
+│├─ withdraws=0
+│├─ deposits=2
+│└─ penalties=1
+├┬ Account<Dewey Duck [800008], balance: $332.00>
+│├─ withdraws=1
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $38.00>
+│├─ withdraws=1
+│├─ deposits=1
+│└─ penalties=1
+Processing transaction: 800008 -$20.00
+Withdrawing $20.00 from Account<Dewey Duck [800008], balance: $332.00>
+Dewey Duck withdrew $20.00
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $999926.00>
+│├─ withdraws=6
+│├─ deposits=2
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $187.00>
+│├─ withdraws=0
+│├─ deposits=3
+│└─ penalties=1
+├┬ Account<Dewey Duck [800008], balance: $312.00>
+│├─ withdraws=2
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $58.00>
+│├─ withdraws=1
+│├─ deposits=2
+│└─ penalties=1
+Processing transaction: 700007 -$30.00
+Withdrawing $30.00 from Account<Huey Duck [700007], balance: $187.00>
+Transaction failed: Unable to withdraw $30.00: Over withdraw limit
+Huey Duck failed to withdraw $30.00: Unable to withdraw $30.00: Over withdraw limit
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $999931.00>
+│├─ withdraws=6
+│├─ deposits=3
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $182.00>
+│├─ withdraws=0
+│├─ deposits=3
+│└─ penalties=2
+├┬ Account<Dewey Duck [800008], balance: $312.00>
+│├─ withdraws=2
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $58.00>
+│├─ withdraws=1
+│├─ deposits=2
+│└─ penalties=1
+Processing transaction: 900009 -$40.00
+Withdrawing $40.00 from Account<Louie Duck [900009], balance: $58.00>
+Transaction failed: Unable to withdraw $40.00: Over withdraw limit
+Louie Duck failed to withdraw $40.00: Unable to withdraw $40.00: Over withdraw limit
+┌ STATE
+├┬ Account<Scrooge McDuck [100001], balance: $999936.00>
+│├─ withdraws=6
+│├─ deposits=4
+│└─ penalties=0
+├┬ Account<Huey Duck [700007], balance: $182.00>
+│├─ withdraws=0
+│├─ deposits=3
+│└─ penalties=2
+├┬ Account<Dewey Duck [800008], balance: $312.00>
+│├─ withdraws=2
+│├─ deposits=1
+│└─ penalties=0
+├┬ Account<Louie Duck [900009], balance: $53.00>
+│├─ withdraws=1
+│├─ deposits=2
+│└─ penalties=2
