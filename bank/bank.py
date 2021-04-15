@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """
+Carson McManus
+04/15/2021
+
 Is it overengineered? Absolutely. Do I regret making it this complicated? Absolutely not.
 """
 
