@@ -1,0 +1,8 @@
+{'Gandolf': {'food': 6, 'grapefruit': 9, 'green potions': 7, 'red potions': 8, 'spells of enchantment': 10}, 'Frodo': {'food': 0, 'kiwi': 5, 'wands of confusion': 7, 'green potions': 8}, 'Sauron': {'bat wings': 5, 'fire wands': 5, 'grapefruit': 5}, 'Bilbo': {'food': 0, 'kiwi': 5, 'wands of confusion': 7, 'green potions': 8}}
+Frodo is all out of food.
+Bilbo is all out of food.
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+OK
